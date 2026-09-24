@@ -21,6 +21,7 @@ import {
 import { serviceSchema, type ServiceInput } from "@/lib/validations/service";
 import { ICON_NAMES } from "@/lib/icon-map";
 import { slugify } from "@/lib/slugify";
+import { MediaUrlField } from "@/components/admin/media/MediaUrlField";
 
 export function ServiceForm({
   defaultValues,
@@ -167,8 +168,14 @@ export function ServiceForm({
           />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="imageUrl">Image URL</Label>
-          <Input id="imageUrl" {...register("imageUrl")} placeholder="https://..." />
+          <Label>Image</Label>
+          <Controller
+            control={control}
+            name="imageUrl"
+            render={({ field }) => (
+              <MediaUrlField value={field.value ?? ""} onChange={field.onChange} />
+            )}
+          />
         </div>
       </div>
 

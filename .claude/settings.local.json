@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(node -e ' *)",
-      "Bash(awk -F= '/^BLOB_READ_WRITE_TOKEN=/{print \"value length:\", length\\($0\\)-length\\(\"BLOB_READ_WRITE_TOKEN=\"\\)}' .env)"
+      "Bash(awk -F= '/^BLOB_READ_WRITE_TOKEN=/{print \"value length:\", length\\($0\\)-length\\(\"BLOB_READ_WRITE_TOKEN=\"\\)}' .env)",
+      "Bash(powershell -NoProfile -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, StartTime\")"
     ]
   }
 }

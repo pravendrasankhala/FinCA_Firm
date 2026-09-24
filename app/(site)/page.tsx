@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getVisibleSections } from "@/lib/data/page-sections";
 import { getSiteSettings } from "@/lib/data/settings";
-import { getPublishedServices } from "@/lib/data/services";
+import { getFeaturedServices } from "@/lib/data/services";
 import {
   getTrustStripItems,
   getWhyChooseUsFeatures,
@@ -63,7 +63,7 @@ export default async function HomePage() {
     posts,
   ] = await Promise.all([
     getVisibleSections("home"),
-    getPublishedServices(),
+    getFeaturedServices(),
     getTrustStripItems(),
     getWhyChooseUsFeatures(),
     getProcessSteps(),

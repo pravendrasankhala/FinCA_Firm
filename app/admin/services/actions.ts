@@ -63,6 +63,13 @@ export async function toggleServicePublished(id: string, published: boolean) {
   return { success: true as const };
 }
 
+export async function toggleServiceFeatured(id: string, featured: boolean) {
+  await requireAdmin();
+  const service = await prisma.service.update({ where: { id }, data: { featured } });
+  revalidateServicePaths(service.slug);
+  return { success: true as const };
+}
+
 export async function reorderServices(orderedIds: string[]) {
   await requireAdmin();
   await prisma.$transaction(

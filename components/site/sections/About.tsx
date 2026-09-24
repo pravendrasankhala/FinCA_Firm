@@ -34,13 +34,13 @@ export function About({ content, media }: { content: AboutContent; media: AboutM
           )}
         </div>
 
-        <div className="relative aspect-4/5 overflow-hidden rounded-2xl bg-navy-100">
+        <div className="relative aspect-[5/5] overflow-hidden rounded-2xl bg-navy-100">
           {media.imageUrl ? (
             <Image
               src={media.imageUrl}
               alt={content.headingLine1 || "About"}
               fill
-              className="object-cover"
+              className="object-fit"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-navy-100 to-navy-200 text-navy-400">

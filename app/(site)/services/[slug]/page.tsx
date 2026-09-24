@@ -1,13 +1,27 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { getServiceBySlug } from "@/lib/data/services";
 import { getSiteSettings } from "@/lib/data/settings";
 import { getProcessSteps } from "@/lib/data/lists";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+function renderRichText(text: string) {
+  const parts = text.split("**");
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <strong key={i}>{part}</strong> : <span key={i}>{part}</span>
+  );
+}
 
 export async function generateMetadata(
   props: PageProps<"/services/[slug]">
@@ -39,21 +53,56 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
 
   return (
     <div>
-      <section className="bg-navy-950 py-20">
-        <div className="mx-auto max-w-4xl px-6 text-center lg:px-8">
+      <section className="bg-[url('/business_setupbred2.jpg')]  bg-cover bg-center mt-20">
+       <div className="bg-navy-950/80 py-16">
+         <div className="mx-auto max-w-4xl px-6 text-center lg:px-8">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-navy-800 text-gold-400">
             <DynamicIcon iconName={service.icon} className="h-6 w-6" />
           </div>
           <h1 className="mt-6 text-3xl font-semibold text-white sm:text-4xl">{service.name}</h1>
           <p className="mt-4 text-base text-navy-200">{service.shortDescription}</p>
         </div>
+       </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 py-16 lg:px-8">
-        <div className="space-y-4 text-base leading-relaxed text-foreground">
-          {service.longDescription.split("\n").filter(Boolean).map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
+      <section className="mx-auto max-w-6xl px-6 py-16 lg:px-8">
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-16">
+          {service.imageUrl && (
+            <div className="relative mx-auto aspect-[4/3] w-full max-w-lg lg:sticky lg:top-24">
+              <div className="absolute -top-8 -right-6 h-full w-full rounded-[24px_120px_120px_24px] bg-gold-500/15" />
+              <Image
+                src={service.imageUrl}
+                alt={service.name}
+                fill
+                sizes="(min-width: 1024px) 40vw, 90vw"
+                className="relative rounded-[24px_120px_120px_100px] object-cover shadow-lg"
+              />
+            </div>
+          )}
+
+          <div>
+            <div className="space-y-4 text-base leading-relaxed text-foreground">
+              {service.longDescription.split("\n").filter(Boolean).map((paragraph, i) => (
+                <p key={i}>{renderRichText(paragraph)}</p>
+              ))}
+            </div>
+
+            {service.highlights.length > 0 && (
+              <div className="mt-10 rounded-xl border border-border bg-secondary/40 p-6 sm:p-8">
+                <h2 className="text-lg font-semibold text-foreground">
+                  Why Choose Our {service.name} Services?
+                </h2>
+                <ul className="mt-5 grid grid-cols-1 gap-3">
+                  {service.highlights.map((point, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold-500" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
@@ -79,14 +128,16 @@ export default async function ServiceDetailPage(props: PageProps<"/services/[slu
       {service.faqs.length > 0 && (
         <section className="mx-auto max-w-3xl px-6 py-16 lg:px-8">
           <h2 className="text-2xl font-semibold text-foreground">Frequently Asked Questions</h2>
-          <div className="mt-8 space-y-6">
-            {service.faqs.map((faq) => (
-              <div key={faq.id} className="border-b border-border pb-6">
-                <h3 className="text-base font-semibold text-foreground">{faq.question}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.answer}</p>
-              </div>
+          <Accordion type="single" collapsible className="mt-6">
+            {service.faqs.map((faq, i) => (
+              <AccordionItem key={faq.id} value={faq.id}>
+                <AccordionTrigger>
+                  {i + 1}. {faq.question}
+                </AccordionTrigger>
+                <AccordionContent>{faq.answer}</AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         </section>
       )}
 

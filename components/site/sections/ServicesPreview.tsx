@@ -19,7 +19,7 @@ export function ServicesPreview({
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <SectionIntro {...content} />
 
-        <div className="relative mt-14 flex flex-col gap-4 sm:mt-16 sm:gap-20 lg:mt-20 lg:gap-32">
+        <div className="relative max-w-5xl mx-auto mt-14 flex flex-col gap-4 sm:mt-16 sm:gap-20 lg:mt-20 lg:gap-32">
           {services.map((service, index) => (
             <div
               key={service.id}

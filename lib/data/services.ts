@@ -8,6 +8,13 @@ export async function getPublishedServices(limit?: number) {
   });
 }
 
+export async function getFeaturedServices() {
+  return prisma.service.findMany({
+    where: { published: true, featured: true },
+    orderBy: { sortOrder: "asc" },
+  });
+}
+
 export async function getServiceBySlug(slug: string) {
   return prisma.service.findFirst({
     where: { slug, published: true },
