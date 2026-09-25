@@ -13,8 +13,8 @@ export function WhyChooseUs({
   if (features.length === 0) return null;
 
   return (
-    <section className="bg-navy-950 py-24">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="relative overflow-hidden bg-navy-950 py-24 before:absolute before:inset-0 before:z-0 before:bg-[url('/problems.png')] before:bg-cover before:bg-center before:bg-no-repeat before:opacity-8 before:content-['']">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
         <SectionIntro {...content} light />
 
         <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">

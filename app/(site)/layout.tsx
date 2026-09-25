@@ -1,3 +1,4 @@
+import { ReactLenis } from "lenis/react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 
@@ -7,10 +8,10 @@ export const dynamic = "force-dynamic";
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <ReactLenis root options={{ duration: 1.4, wheelMultiplier: 0.8, touchMultiplier: 1.2 }}>
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
-    </>
+    </ReactLenis>
   );
 }

@@ -24,6 +24,7 @@ import { SortableList } from "@/components/admin/SortableList";
 import { PublishToggle } from "@/components/admin/PublishToggle";
 import { ConfirmDeleteButton } from "@/components/admin/ConfirmDeleteButton";
 import { testimonialSchema, type TestimonialInput } from "@/lib/validations/testimonial";
+import { MediaUrlField } from "@/components/admin/media/MediaUrlField";
 import {
   createTestimonial,
   updateTestimonial,
@@ -167,8 +168,14 @@ function TestimonialDialog({
               <Input id="t-designation" {...register("designation")} />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="t-photo">Photo URL</Label>
-              <Input id="t-photo" {...register("photoUrl")} placeholder="https://..." />
+              <Label>Photo</Label>
+              <Controller
+                control={control}
+                name="photoUrl"
+                render={({ field }) => (
+                  <MediaUrlField value={field.value ?? ""} onChange={field.onChange} />
+                )}
+              />
             </div>
           </div>
           <div className="space-y-1.5">

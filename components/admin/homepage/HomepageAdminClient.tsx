@@ -40,6 +40,7 @@ const SECTION_LABELS: Record<string, string> = {
   BLOGS: "Insights (intro text)",
   CTA: "CTA",
   CONTACT: "Contact",
+  CUSTOM: "Problems Section",
 };
 
 export function HomepageAdminClient({

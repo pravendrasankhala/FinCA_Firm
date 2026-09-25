@@ -19,6 +19,7 @@ import { Hero } from "@/components/site/sections/Hero";
 import { TrustStrip } from "@/components/site/sections/TrustStrip";
 import { About } from "@/components/site/sections/About";
 import { ServicesPreview } from "@/components/site/sections/ServicesPreview";
+import { ProblemsSection } from "@/components/site/sections/ProblemsSection";
 import { WhyChooseUs } from "@/components/site/sections/WhyChooseUs";
 import { ProcessTimeline } from "@/components/site/sections/ProcessTimeline";
 import { IndustriesGrid } from "@/components/site/sections/IndustriesGrid";
@@ -97,6 +98,8 @@ export default async function HomePage() {
                 media={section.media as AboutMedia}
               />
             );
+          case SectionType.CUSTOM:
+            return <ProblemsSection key={section.id} />;
           case SectionType.SERVICES:
             return (
               <ServicesPreview
@@ -113,14 +116,14 @@ export default async function HomePage() {
                 features={whyChooseUsFeatures}
               />
             );
-          case SectionType.PROCESS:
-            return (
-              <ProcessTimeline
-                key={section.id}
-                content={section.content as SectionIntroContent}
-                steps={processSteps}
-              />
-            );
+          // case SectionType.PROCESS:
+          //   return (
+          //     <ProcessTimeline
+          //       key={section.id}
+          //       content={section.content as SectionIntroContent}
+          //       steps={processSteps}
+          //     />
+          //   );
           case SectionType.INDUSTRIES:
             return (
               <IndustriesGrid
@@ -148,13 +151,7 @@ export default async function HomePage() {
               />
             );
           case SectionType.TESTIMONIALS:
-            return (
-              <Testimonials
-                key={section.id}
-                content={section.content as SectionIntroContent}
-                testimonials={testimonials}
-              />
-            );
+            return <Testimonials key={section.id} testimonials={testimonials} />;
           case SectionType.BLOGS:
             return (
               <InsightsPreview
