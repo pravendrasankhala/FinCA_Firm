@@ -1,12 +1,13 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { MediaUrlField } from "@/components/admin/media/MediaUrlField";
 import { toast } from "sonner";
 import {
   generalSettingsSchema,
@@ -17,6 +18,7 @@ import { updateGeneralSettings } from "@/app/admin/settings/actions";
 export function GeneralSettingsForm({ defaultValues }: { defaultValues: GeneralSettingsInput }) {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<GeneralSettingsInput>({
@@ -49,12 +51,24 @@ export function GeneralSettingsForm({ defaultValues }: { defaultValues: GeneralS
       </div>
       <div className="grid grid-cols-2 gap-5">
         <div className="space-y-1.5">
-          <Label htmlFor="logoUrl">Logo URL</Label>
-          <Input id="logoUrl" {...register("logoUrl")} placeholder="https://..." />
+          <Label>Logo</Label>
+          <Controller
+            control={control}
+            name="logoUrl"
+            render={({ field }) => (
+              <MediaUrlField value={field.value ?? ""} onChange={field.onChange} />
+            )}
+          />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="faviconUrl">Favicon URL</Label>
-          <Input id="faviconUrl" {...register("faviconUrl")} placeholder="https://..." />
+          <Label>Favicon</Label>
+          <Controller
+            control={control}
+            name="faviconUrl"
+            render={({ field }) => (
+              <MediaUrlField value={field.value ?? ""} onChange={field.onChange} />
+            )}
+          />
         </div>
       </div>
       <div className="grid grid-cols-2 gap-5">

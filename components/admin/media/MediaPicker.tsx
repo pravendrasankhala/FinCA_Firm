@@ -70,7 +70,11 @@ export function MediaPicker({
             assets={assets}
             selectedUrl={picked}
             onSelect={(asset) => setPicked(asset.url)}
-            showDelete={false}
+            onDeleted={(id) => {
+              const deleted = assets.find((a) => a.id === id);
+              setAssets((prev) => prev.filter((a) => a.id !== id));
+              if (deleted && picked === deleted.url) setPicked(undefined);
+            }}
           />
         )}
 

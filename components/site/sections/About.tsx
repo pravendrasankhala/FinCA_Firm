@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { AboutContent, AboutMedia } from "@/lib/types/sections";
 
@@ -7,7 +10,12 @@ export function About({ content, media }: { content: AboutContent; media: AboutM
   return (
     <section className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
       <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: -24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           {content.label && (
             <p className="text-xs font-semibold tracking-[0.2em] text-gold-600 uppercase">
               {content.label}
@@ -26,15 +34,21 @@ export function About({ content, media }: { content: AboutContent; media: AboutM
           {content.buttonText && (
             <Link
               href={content.buttonUrl || "/about"}
-              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:gap-3 transition-all"
+              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
             >
               {content.buttonText}
               <ArrowRight className="h-4 w-4" />
             </Link>
           )}
-        </div>
+        </motion.div>
 
-        <div className="relative aspect-[5/5] overflow-hidden rounded-2xl bg-navy-100">
+        <motion.div
+          initial={{ opacity: 0, x: 24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+          className="relative aspect-[5/5] overflow-hidden rounded-2xl bg-navy-100"
+        >
           {media.imageUrl ? (
             <Image
               src={media.imageUrl}
@@ -47,7 +61,7 @@ export function About({ content, media }: { content: AboutContent; media: AboutM
               Image
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

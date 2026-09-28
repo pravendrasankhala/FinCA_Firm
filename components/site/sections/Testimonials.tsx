@@ -123,11 +123,11 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
           )}
         </Carousel>
 
-        <div className="mt-14 text-center">
+        {/* <div className="mt-14 text-center">
           <Button asChild size="lg" className="bg-gold-500 text-navy-950 hover:bg-gold-400">
             <Link href="/contact">View More</Link>
           </Button>
-        </div>
+        </div> */}
       </div>
     </section>
   );

@@ -71,9 +71,9 @@ export function HeaderClient({
       )}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
-          {logoUrl ? (
-            <Image src={logoUrl} alt={firmName} width={140} height={36} className="h-9 w-auto" />
+        <Link href="/">
+          {logoUrl && (logoUrl.startsWith("/") || logoUrl.startsWith("http")) ? (
+            <Image src={logoUrl} alt={firmName} width={200} height={76} className="w-auto" />
           ) : (
             <span
               className={cn(

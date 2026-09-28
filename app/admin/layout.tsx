@@ -16,7 +16,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar firmName={settings.firmName} />
+      <Sidebar firmName={settings.firmName} logoUrl={settings.logoUrl} />
       <div className="flex flex-1 flex-col">
         <Topbar userName={user.name ?? user.email ?? "Admin"} />
         <main className="flex-1 bg-secondary/30 p-6 lg:p-8">{children}</main>

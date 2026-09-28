@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
+import { getSiteSettings } from "@/lib/data/settings";
 import "./globals.css";
 
 const inter = Inter({
@@ -15,10 +16,14 @@ const fraunces = Fraunces({
   axes: ["opsz"],
 });
 
-export const metadata: Metadata = {
-  title: "Aurevia & Co. | Chartered Accountants",
-  description: "Clarity in Numbers. Confidence in Decisions.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  return {
+    title: settings.metaTitle || `${settings.firmName} | ${settings.tagline}`,
+    description: settings.metaDescription || settings.tagline,
+    icons: settings.faviconUrl ? { icon: settings.faviconUrl } : undefined,
+  };
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

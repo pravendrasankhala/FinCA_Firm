@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { getSiteSettings } from "@/lib/data/settings";
 import { getNavigation } from "@/lib/data/navigation";
@@ -22,18 +23,30 @@ export async function Footer() {
   ]);
 
   const social = (settings.socialLinks ?? {}) as SocialLinks;
+  const hasValidLogo =
+    !!settings.logoUrl && (settings.logoUrl.startsWith("/") || settings.logoUrl.startsWith("http"));
   const year = new Date().getFullYear();
   const copyright =
     settings.copyrightText || `© ${year} ${settings.firmName}. All rights reserved.`;
 
   return (
-    <footer className="border-t border-navy-800 bg-navy-950 text-navy-200">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+    <footer className="relative overflow-hidden border-t border-navy-800 bg-navy-950 text-navy-200 before:absolute before:inset-0 before:z-0 before:bg-[url('/footer_image.png')] before:bg-cover before:bg-no-repeat before:opacity-20 before:content-['']">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="font-heading text-lg font-semibold text-white">
-              {settings.firmName}
-            </h3>
+            {hasValidLogo ? (
+              <Image
+                src={settings.logoUrl!}
+                alt={settings.firmName}
+                width={200}
+                height={36}
+                className="h-20 w-auto"
+              />
+            ) : (
+              <h3 className="font-heading text-lg font-semibold text-white">
+                {settings.firmName}
+              </h3>
+            )}
             <p className="mt-3 text-sm leading-relaxed text-navy-300">{settings.tagline}</p>
             <div className="mt-5 flex gap-3">
               {social.linkedin && <SocialIcon href={social.linkedin} label="in" />}
